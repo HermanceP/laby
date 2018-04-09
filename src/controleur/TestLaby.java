@@ -122,8 +122,8 @@ public class TestLaby {
     public static void main(String[] args) {
 
         try {
-            
-            String nomLaby="D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET 1\\Labyrinthe2018_4\\Labyrinthe2018\\labyrinthe.txt";
+            String nomLaby="C:\\Users\\Tao Tuong Vi\\Documents\\ECE\\ING3\\JAVA\\TP3\\Laby\\laby\\labyrinthe.txt";
+            //String nomLaby="D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET 1\\Labyrinthe2018_4\\Labyrinthe2018\\labyrinthe.txt";
             TestLaby test;
             test= new TestLaby(new File(nomLaby));
             
