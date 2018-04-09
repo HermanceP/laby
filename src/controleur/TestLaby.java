@@ -112,7 +112,7 @@ public class TestLaby {
                 }
             } catch (ImpossibleMoveException ex) 
             {
-                macase = laby.getCase(laby.getCurrentPositionY(), laby.getCurrentPositionX());
+                //macase = laby.getCase(laby.getCurrentPositionY(), laby.getCurrentPositionX());
             }
         }
         return stop;

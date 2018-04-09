@@ -138,6 +138,8 @@ public class Labyrinthe {
         do {
             Random r = new Random();
             dir = r.nextInt(4);
+            posX=x;
+            posY=y;
             System.out.println("blob="+dir);
             switch (dir) {
                 case 0: // haut
