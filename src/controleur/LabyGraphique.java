@@ -7,12 +7,12 @@ package controleur;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.awt.image.*;
+import java.io.*;
+import javax.imageio.ImageIO;
 import modele.*;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 /**
  *
@@ -20,6 +20,8 @@ import java.awt.event.MouseListener;
  */
 public class LabyGraphique extends JFrame implements ActionListener
 {
+    private BufferedImage image;
+    
     private TestLaby test;
     private JPanel pan_menu ; // panneau menu
     private JPanel pan_laby ; // panneau labyrinthe
@@ -57,9 +59,20 @@ public class LabyGraphique extends JFrame implements ActionListener
             }
         }
          
+        try
+        {                
+            image = ImageIO.read(new File("C:\\Users\\Tao Tuong Vi\\Documents\\ECE\\ING3\\JAVA\\TP3\\Laby\\laby\\sprite.png"));
+        } catch (IOException ex) {
+            System.out.println("lien sprite.png n'est pas le bon ");
+        }
+         
+        
+       // JLabel picLabel = new JLabel(new ImageIcon(image));
+        
         
         getContentPane().add(pan_menu, BorderLayout.NORTH); // ajouter le panneau dans la fenêtre
         getContentPane().add(pan_laby, BorderLayout.CENTER); // ajouter le panneau dans la fenêtre
+       
     }
     
     public void affiche(Case c) {
@@ -126,4 +139,33 @@ public class LabyGraphique extends JFrame implements ActionListener
            test.deplacerAuto();
        }
     }
+
+
+    public static Image make_col_transparent( Image img)
+    {
+        ImageFilter filter = new RGBImageFilter() {
+            int transparentColor = Color.white.getRGB() | 0xFF000000;
+
+            public final int filterRGB(int x, int y, int rgb) {
+                if ((rgb | 0xFF000000) == transparentColor) {
+                    return 0x00FFFFFF & rgb;
+                } else {
+                    return rgb;
+                }
+            }
+        };
+        ImageProducer ip = new FilteredImageSource(img.getSource(), filter);
+        return Toolkit.getDefaultToolkit().createImage(ip);
+    }
+
+
+
+
+
+
 }
+
+
+
+
+
