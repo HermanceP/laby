@@ -6,6 +6,7 @@ package modele;
 
 import controleur.ImpossibleMoveException;
 import controleur.FileFormatException;
+import controleur.TestLaby;
 import java.util.*;
 import java.io.*;
 
@@ -70,6 +71,8 @@ public class Labyrinthe {
                 } // fin du for col
                 sc.nextLine();
             } // fin du for lig
+            
+            grille.get(0).setVisited();
 
             // ajouter les cases adjacentes aux trous
             for (lig = 0; lig < tailleY; lig++) { // lignes
@@ -162,6 +165,46 @@ public class Labyrinthe {
             move(posY, posX);
         }
     }
+        
+    public boolean deplacerClaviergauche(TestLaby test){
+           if(posX > 0 && getCase(posY,posX--).canMoveToCase() == true){
+               setVisited(posY, posX); 
+               return test.afficherGraph();
+           }
+           else{
+               return false;
+           }
+       }
+       
+       public boolean deplacerClavierdroite(TestLaby test){
+           if(posX < tailleX && getCase(posY,posX++).canMoveToCase() == true){
+               setVisited(posY, posX);
+               return test.afficherGraph();
+           }
+           else{
+               return false;
+           }
+       }
+       
+       public boolean deplacerClavierhaut(TestLaby test){
+           if(posY > 0 && getCase(posY--,posX).canMoveToCase() == true){
+               setVisited(posY, posX);
+               return test.afficherGraph();
+           }
+           else{
+               return false;
+           }
+       }
+       
+       public boolean deplacerClavierbas(TestLaby test){
+           if(posY < tailleY && getCase(posY++,posX).canMoveToCase() == true){
+               setVisited(posY, posX);
+               return test.afficherGraph();
+           }
+           else{
+               return false;
+           }
+       }
 
     /**
      * accesseur retourne la position courante en X

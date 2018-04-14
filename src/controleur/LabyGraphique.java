@@ -30,6 +30,7 @@ public class LabyGraphique extends JFrame implements ActionListener
     private JButton bouton_DFS;
     private JButton bouton_auto;
     private JButton bouton_exit;
+    private JButton bouton_clavier;
     
  //   private Labyrinthe laby;
     
@@ -46,6 +47,7 @@ public class LabyGraphique extends JFrame implements ActionListener
         bouton_DFS=new JButton("DFS"); //DES
         bouton_auto=new JButton("Auto");
         bouton_exit=new JButton("Exit");
+        bouton_clavier=new JButton("Clavier");
 
         
          boutons = new JButton [test.getLaby().getTailleY()][test.getLaby().getTailleX()] ; // instancier les lignes de la matrice de boutons
@@ -63,7 +65,7 @@ public class LabyGraphique extends JFrame implements ActionListener
          //LECTURE FICHIER DE L'IMAGE
         try
         {                
-            Image image = ImageIO.read(new File("C:\\Users\\Tao Tuong Vi\\Documents\\ECE\\ING3\\JAVA\\TP3\\Laby\\laby\\sprite.png"));
+            Image image = ImageIO.read(new File("D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET_GITHUB\\Labyrinthe2018-master\\laby\\sprite.png"));
             image=make_col_transparent(image);
             img = new ImageIcon(image);
             
@@ -96,11 +98,13 @@ public class LabyGraphique extends JFrame implements ActionListener
         bouton_DFS.addActionListener(this);
         bouton_auto.addActionListener(this);
         bouton_exit.addActionListener(this);
-        
+        bouton_clavier.addActionListener(this);
         
         pan_menu.add(bouton_DFS);
         pan_menu.add(bouton_auto);
-        pan_menu.add(bouton_exit);         
+        pan_menu.add(bouton_clavier);
+        pan_menu.add(bouton_exit);       
+        
                     
         pan_laby.setLayout(new GridLayout(laby.getTailleY(), laby.getTailleX())); // mise en forme avec une grille
         //boutons = new JButton [laby.getTailleY()][laby.getTailleX()] ; // instancier les lignes de la matrice de boutons
@@ -147,6 +151,46 @@ public class LabyGraphique extends JFrame implements ActionListener
        {
            test.deplacerAuto();
        }
+       else if(source==bouton_clavier)
+       {
+           pan_laby.addKeyListener(new KeyListener() {
+                @Override
+                public void keyTyped(KeyEvent e) {}
+
+                @Override
+                public void keyReleased(KeyEvent e) {}
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    int key = e.getKeyCode();
+                    boolean arrivee=false;
+                        
+                    if(key == KeyEvent.VK_LEFT){
+                        arrivee=test.getLaby().deplacerClaviergauche(test);
+                        e.consume();
+                    }
+                    if(key == KeyEvent.VK_RIGHT){
+                        arrivee=test.getLaby().deplacerClavierdroite(test);
+                        e.consume();
+                    }
+                    if(key == KeyEvent.VK_UP){
+                        arrivee=test.getLaby().deplacerClavierhaut(test);
+                        e.consume();
+                    }
+                    if(key == KeyEvent.VK_DOWN){
+                        arrivee=test.getLaby().deplacerClavierbas(test);
+                        e.consume();
+                    }
+                        
+                    if(arrivee==true){
+                        pan_laby.setFocusable(false);
+                    }
+                    
+                }
+            });
+            pan_laby.setFocusable(true);
+            pan_laby.requestFocusInWindow();
+        }
     }
 
 

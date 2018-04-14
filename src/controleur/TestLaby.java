@@ -118,13 +118,26 @@ public class TestLaby {
         return stop;
     }
     
+    public boolean afficherGraph(){
+        boolean stop=false;
+        Case macase;
+        macase = laby.getCase(laby.getCurrentPositionY(), laby.getCurrentPositionX());
+                
+        graphique.affiche(macase);
+        graphique.affiche(laby);
+        if (laby.getCurrentPositionX() == laby.getArriveeX() && laby.getCurrentPositionY() == laby.getArriveeY()) {
+            System.out.println("ARRIVEE");
+            stop = true;
+        }
+        return stop;
+    }
     
 
     //public void 
     public static void main(String[] args) {
 
         try {
-            String nomLaby="C:\\Users\\Tao Tuong Vi\\Documents\\ECE\\ING3\\JAVA\\TP3\\Laby\\laby\\labyrinthe.txt";
+            String nomLaby="D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET_GITHUB\\Labyrinthe2018-master\\laby\\labyrinthe.txt";
             //String nomLaby="D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET 1\\Labyrinthe2018_4\\Labyrinthe2018\\labyrinthe.txt";
             TestLaby test;
             test= new TestLaby(new File(nomLaby));
