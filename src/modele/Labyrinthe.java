@@ -72,7 +72,11 @@ public class Labyrinthe {
                 sc.nextLine();
             } // fin du for lig
             
-            grille.get(0).setVisited();
+            for(i=0;i<grille.size();i++){
+                if(grille.get(i).getPositionX()==departX && grille.get(i).getPositionY()==departY){
+                    grille.get(i).setVisited();
+                }
+            }
 
             // ajouter les cases adjacentes aux trous
             for (lig = 0; lig < tailleY; lig++) { // lignes
@@ -165,44 +169,68 @@ public class Labyrinthe {
             move(posY, posX);
         }
     }
-        
-    public boolean deplacerClaviergauche(TestLaby test){
-           if(posX > 0 && getCase(posY,posX--).canMoveToCase() == true){
-               setVisited(posY, posX); 
+        /**
+         * deplacement avec keylistener, verifie que l'on peut bouger à la case desiree
+         * @param test
+         * @return 
+         */
+    public boolean deplacerClaviergauche(TestLaby test)throws ImpossibleMoveException {
+        int x=posX;
+        int y=posY;
+        x--;
+        if(x >= 0 && getCase(y,x).canMoveToCase() == true && getCase(y,x) != null){
+               setVisited(y, x); 
                return test.afficherGraph();
            }
            else{
-               return false;
+               //return false;
+               throw new ImpossibleMoveException();
            }
        }
        
-       public boolean deplacerClavierdroite(TestLaby test){
-           if(posX < tailleX && getCase(posY,posX++).canMoveToCase() == true){
-               setVisited(posY, posX);
+       public boolean deplacerClavierdroite(TestLaby test) throws ImpossibleMoveException {
+           int x=posX;
+           int y=posY;
+           x++;
+           if(x < tailleX && getCase(y,x).canMoveToCase() == true && getCase(y,x) != null){
+               //setVisited(posY, posX);
+               //posX=x;
+               //posY=y;
+               move(y, x);
                return test.afficherGraph();
            }
            else{
-               return false;
+               System.out.println("nuhu");
+               throw new ImpossibleMoveException();
+               //return false; 
            }
        }
        
-       public boolean deplacerClavierhaut(TestLaby test){
-           if(posY > 0 && getCase(posY--,posX).canMoveToCase() == true){
-               setVisited(posY, posX);
+       public boolean deplacerClavierhaut(TestLaby test) throws ImpossibleMoveException{
+           int x=posX;
+           int y=posY;
+           y--;
+           if(y >= 0 && getCase(y,x).canMoveToCase() == true && getCase(y,x) != null){
+               setVisited(y, x);
                return test.afficherGraph();
            }
            else{
-               return false;
+               //return false;
+               throw new ImpossibleMoveException();
            }
        }
        
-       public boolean deplacerClavierbas(TestLaby test){
-           if(posY < tailleY && getCase(posY++,posX).canMoveToCase() == true){
-               setVisited(posY, posX);
+       public boolean deplacerClavierbas(TestLaby test) throws ImpossibleMoveException {
+           int x=posX;
+           int y=posY;
+           y++;
+           if(y < tailleY && getCase(y,x).canMoveToCase() == true && getCase(y,x) != null){
+               setVisited(y, x);
                return test.afficherGraph();
            }
            else{
-               return false;
+               //return false;
+               throw new ImpossibleMoveException();
            }
        }
 
@@ -289,7 +317,7 @@ public class Labyrinthe {
         posY = lig;
         getCase(lig, col).setVisited();
     }
-
+    
 
 } // fin de Labyrinthe
 

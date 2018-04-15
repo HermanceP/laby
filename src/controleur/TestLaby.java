@@ -52,9 +52,14 @@ public class TestLaby {
     public boolean deplacerDFS(int ligne, int colonne) {
         boolean stop = false;
         Case macase;
-
+   
         // Si la sortie, on s'arrête
         if (colonne == laby.getArriveeX() && ligne == laby.getArriveeY()) {
+            macase = laby.getCase(ligne, colonne);
+            laby.setVisited(ligne, colonne);
+            //System.out.println(laby.getCurrentPositionY()+" "+laby.getCurrentPositionX());
+            graphique.affiche(macase);
+            graphique.affiche(laby);
             System.out.println("ARRIVEE");
             stop = true;
         } else {

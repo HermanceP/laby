@@ -21,6 +21,7 @@ import modele.*;
 public class LabyGraphique extends JFrame implements ActionListener
 {
     private Icon img;
+    private Icon img2;
     
     private TestLaby test;
     private JPanel pan_menu ; // panneau menu
@@ -72,6 +73,17 @@ public class LabyGraphique extends JFrame implements ActionListener
         } catch (IOException ex) {
             System.out.println("lien sprite.png n'est pas le bon ");
         }
+        
+        //LECTURE FICHIER DE L'IMAGE MUR
+        try
+        {                
+            Image image2 = ImageIO.read(new File("D:\\Documents\\ECE 2018\\JAVA\\PROJET\\PROJET_GITHUB\\Labyrinthe2018-master\\laby\\mur.png"));
+            image2=make_col_transparent(image2);
+            img2 = new ImageIcon(image2);
+            
+        } catch (IOException ex) {
+            System.out.println("lien mur.png n'est pas le bon ");
+        }
          
         
        // JLabel picLabel = new JLabel(new ImageIcon(image));
@@ -83,8 +95,6 @@ public class LabyGraphique extends JFrame implements ActionListener
     }
     
     public void affiche(Case c) {
-        
-        
         System.out.println("ligne = " + c.getPositionY() + " colonne=" + c.getPositionX());
     }
     
@@ -119,7 +129,7 @@ public class LabyGraphique extends JFrame implements ActionListener
                 Case c=laby.getCase(j,i);
                 
                 if (c instanceof CaseMur) {
-                    boutons[j][i].setText("mur");
+                    boutons[j][i].setIcon(img2);
                 } else {
                     if (c.getVisited()) {
                         boutons[j][i].setText("V");
@@ -133,6 +143,7 @@ public class LabyGraphique extends JFrame implements ActionListener
         
         
         boutons[laby.getCurrentPositionY()][laby.getCurrentPositionX()].setIcon(img);
+        boutons[laby.getCurrentPositionY()][laby.getCurrentPositionX()].setText("");
 
     }
 
@@ -153,6 +164,7 @@ public class LabyGraphique extends JFrame implements ActionListener
        }
        else if(source==bouton_clavier)
        {
+           System.out.println("Se deplacer avec les touches directionelles!");
            pan_laby.addKeyListener(new KeyListener() {
                 @Override
                 public void keyTyped(KeyEvent e) {}
@@ -164,7 +176,7 @@ public class LabyGraphique extends JFrame implements ActionListener
                 public void keyPressed(KeyEvent e) {
                     int key = e.getKeyCode();
                     boolean arrivee=false;
-                        
+                    try{    
                     if(key == KeyEvent.VK_LEFT){
                         arrivee=test.getLaby().deplacerClaviergauche(test);
                         e.consume();
@@ -185,7 +197,10 @@ public class LabyGraphique extends JFrame implements ActionListener
                     if(arrivee==true){
                         pan_laby.setFocusable(false);
                     }
-                    
+                    }
+                    catch (ImpossibleMoveException ex){
+                        System.out.println("pbm");
+                    }
                 }
             });
             pan_laby.setFocusable(true);
